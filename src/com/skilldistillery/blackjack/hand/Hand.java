@@ -7,7 +7,7 @@ import com.skilldistillery.blackjack.cards.Card;
 public abstract class Hand {
 	// F I E L D S
 	
-	private List<Card> cards;
+	protected List<Card> cards;
 	
 	// M E T H O D S 
 	
@@ -24,10 +24,16 @@ public abstract class Hand {
 	}
 	
 	public abstract int getHandValue();
-
+		
+	public List<Card> getHand() {
+		
+		List<Card> cardsDefensive = new ArrayList<>();
+		cardsDefensive.addAll(cards);
+		return cardsDefensive;
+	}
 	@Override
 	public String toString() {
-		return "Hand - cards: " + cards;
+		return "Cards: " + cards;
 	}
 	
 }

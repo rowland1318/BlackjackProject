@@ -4,4 +4,6 @@ import com.skilldistillery.blackjack.hand.Hand;
 
 public abstract class Player {
 	
+	
+	
 }

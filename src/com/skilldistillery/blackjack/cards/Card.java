@@ -1,7 +1,6 @@
 package com.skilldistillery.blackjack.cards;
 
 public class Card {
-	
 	// F I E L D S
 	
 	private Rank rank;

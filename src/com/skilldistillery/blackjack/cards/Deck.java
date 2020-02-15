@@ -34,6 +34,7 @@ public class Deck {
 	}
 	
 	public Card dealCard() {
+		shuffle();
 		return cards.remove(0);
 	}
 	

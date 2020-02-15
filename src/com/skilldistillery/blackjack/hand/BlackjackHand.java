@@ -1,8 +1,11 @@
 package com.skilldistillery.blackjack.hand;
 
+import com.skilldistillery.blackjack.cards.Card;
+
 public class BlackjackHand extends Hand {
 	
 	// F I E L D S
+	
 	
 	// M E T H O D S 
 	
@@ -12,17 +15,28 @@ public class BlackjackHand extends Hand {
 
 	@Override
 	public int getHandValue() {
-		return 0;
+		int handValue = 0;
+		for (Card card : cards) {
+			handValue += card.getValue();
+		}
+		return handValue;
 	}
 	
 	public boolean isBlackjack() {
-		// write the logic for cards = 21 first time
-		return false;
+		if(this.getHandValue() == 21) {
+			return true;
+		} else {
+			return false;	
+		}
 	}
 	
 	public boolean isBust() {
-		//write logic for bust
-		return false;
+		if(this.getHandValue() > 21) {
+			System.out.println("You done busted");
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }
