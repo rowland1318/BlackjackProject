@@ -29,8 +29,22 @@ public class BlackjackDealer extends BlackjackPlayer {
 		return hand;
 	}
 	
-	public void printDealerHand() {
-		System.out.println("Dealer you have the:\n"  + " [Hidden] "+ hand.getHand().get(1));
+	public void printDealerHandHidden() {
+		System.out.println("Dealer has been dealt the:\n[Hidden] "+ hand.getHand().get(1));
+	}
+	
+	public void printDealerBothCards() {
+		System.out.println("Dealer has been dealt the:\n" + hand.toString());
+	}
+	
+	public boolean dealerUnder17 () {
+		boolean checkFor17 = true;
+		if (hand.getHandValue() <17) {
+			checkFor17 = true;
+		} else {
+			checkFor17 = false;
+		}
+		return checkFor17;
 	}
 	
 	

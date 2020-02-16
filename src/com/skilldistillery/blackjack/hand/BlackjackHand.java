@@ -22,7 +22,7 @@ public class BlackjackHand extends Hand {
 		return handValue;
 	}
 	
-	public boolean isBlackjack() {
+	public boolean blackjackCheck() {
 		if(this.getHandValue() == 21) {
 			return true;
 		} else {
@@ -30,7 +30,7 @@ public class BlackjackHand extends Hand {
 		}
 	}
 	
-	public boolean isBust() {
+	public boolean bustCheck() {
 		if(this.getHandValue() > 21) {
 			System.out.println("You done busted");
 			return false;

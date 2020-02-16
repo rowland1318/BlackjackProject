@@ -33,7 +33,7 @@ public abstract class Hand {
 	}
 	@Override
 	public String toString() {
-		return "Cards: " + cards;
+		return "" + cards;
 	}
 	
 }
