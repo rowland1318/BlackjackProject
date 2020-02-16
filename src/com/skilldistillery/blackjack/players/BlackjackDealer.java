@@ -14,7 +14,7 @@ public class BlackjackDealer extends BlackjackPlayer {
 	}
 	
 	public void dealToDealer(Card card) {
-		hand.addCard(card);
+		hand.addCard(deck.dealCard());
 	}
 	
 	public void dealToPlayer(BlackjackPlayer player) {

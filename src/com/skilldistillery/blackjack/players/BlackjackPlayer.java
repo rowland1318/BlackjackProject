@@ -10,10 +10,6 @@ public class BlackjackPlayer extends Player {
 		hand = new BlackjackHand();
 	}
 	
-	public void getDealtCard(Card card) {
-		hand.addCard(card);
-	}
-	
 	public void hit(Card card) {
 		hand.addCard(card);
 	}

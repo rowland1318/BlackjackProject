@@ -30,7 +30,7 @@ public class BlackjackApp {
 				int userChoice = kb.nextInt();
 				switch(userChoice) {
 				case 1:
-					gamePlay();
+					initialDealingOfHands();
 					break;
 				case 2:
 					System.out.println("Good, I didn't want you at my table anyways");
@@ -47,7 +47,7 @@ public class BlackjackApp {
 		
 	} // end of displayMenu Method
 
-	public void gamePlay() {
+	public void initialDealingOfHands() {
 		//dealing the cards
 		dealer.dealToPlayer(player);
 		player.printPlayerHand();
@@ -58,43 +58,53 @@ public class BlackjackApp {
 		player.printPlayerHand();
 		dealer.printDealerHandHidden();
 		System.out.println("Player total is " + player.getPlayerHand().getHandValue());
-		System.out.println("Dealer total is " + dealer.getDealerHand().getHandValue());
+//		System.out.println("Dealer total is " + dealer.getDealerHand().getHandValue()); display when testing
 		
-		if(!player.getPlayerHand().blackjackCheck() && !dealer.getDealerHand().blackjackCheck()) {
+		
+		// checking for blackjack
+		// if no one has blackjack then display internal menu for player to hit or stay
+		if(!player.getPlayerHand().isBlackjack() && !dealer.getDealerHand().isBlackjack()) {
 			playerInternalMenu();
 		}
-		if(player.getPlayerHand().blackjackCheck() || dealer.getDealerHand().blackjackCheck()) {
+		// if there is a blackjack then go to winnerCheck to display the correct sysout
+		if(player.getPlayerHand().isBlackjack() || dealer.getDealerHand().isBlackjack()) {
 			winnerCheck();
-		} else {
-			System.out.println("Goodbye Peasant");
-			System.exit(0);
-		}
+		} 
 
 	} // end of gamePlay Method
 	
 	public void winnerCheck() {
-		if(dealer.getDealerHand().blackjackCheck()) {
-			System.out.println("You get nothing! You lose! Good day, sir!");
+		if(dealer.getDealerHand().isBlackjack()) {
+			System.out.println("Dealer has Blackjack! You get nothing! You lose! Good day, sir!");
 		}
-		if(player.getPlayerHand().blackjackCheck()) {
+		if(player.getPlayerHand().isBlackjack()) {
 			System.out.println("BLACKJACK! That was unexpected. . . ");
 		}
-		if(dealer.getDealerHand().bustCheck()) {
+		if(dealer.getDealerHand().isBust()) {
 			System.out.println("The Dealer Busted, which means you lucked out this time scrub.");
-			playAgain();
+		}
+		if(player.getPlayerHand().isBust()) {
+			System.out.println("You done busted!");
 		}
 		if(dealer.getDealerHand().getHandValue() == player.getPlayerHand().getHandValue()) {
 			System.out.println("Looks like we have a tie here boys");
-			playAgain();
 		}
+		playAgain();
 	} //end of winnerCheck Method
 	
 	public void playAgain() {
-		System.out.println("Thank you for playing Blackjack at my table, have a mediocre day!");
-		dealer.getDealerHand().clear();
-		player.getPlayerHand().clear();
-		dealer.getDeck(); //unable to reach the create deck
-		displayInitialMenu();
+		System.out.println("Thank you for playing Blackjack at my table, would you like to play again?");
+		System.out.println("Type Y for yes or N for no");
+		String yesOrNo = kb.nextLine();
+		if(yesOrNo.equalsIgnoreCase("Y")) {
+			dealer.getDealerHand().clear();
+			player.getPlayerHand().clear();
+			dealer.getDeck(); //unable to reach the create deck
+			displayInitialMenu();
+		} else if (yesOrNo.equalsIgnoreCase("N")) {
+			System.out.println("Have a mediocre day!");
+			System.exit(0);
+		}
 	}
 	
 	
@@ -132,33 +142,39 @@ public class BlackjackApp {
 	}
 	
 	public void dealerHandPlay() {
-		while(!dealer.getDealerHand().bustCheck() && (!(dealer.getDealerHand().getHandValue() == 21))) {
+		while(!dealer.getDealerHand().isBust() && (!(dealer.getDealerHand().getHandValue() == 21))) {
 			do {
-				if (dealer.dealerUnder17() && !dealer.getDealerHand().bustCheck()) {
+				if (dealer.dealerUnder17() && !dealer.getDealerHand().isBust()) {
 					System.out.println("Dealer asks for another card");
-
 					dealer.dealToDealer(dealer.getDeck().dealCard());
 					dealer.printDealerBothCards();
-					System.out.println("Dealer's total is now :  " + dealer.getDealerHand());
+					System.out.println("Dealer's total is now :  " + dealer.getDealerHand().getHandValue());
+					winnerCheck();
 				}
-				if (!dealer.dealerUnder17() && !dealer.getDealerHand().bustCheck()) {
+				if (!dealer.dealerUnder17() && !dealer.getDealerHand().isBust()) {
 					System.out.println("Dealer has decided to stay");
-					System.out.println("Dealer's total is still :  " + dealer.getDealerHand());
-					playerInternalMenu();
+					System.out.println("Dealer's total is still :  " + dealer.getDealerHand().getHandValue());
+					winnerCheck();
 				}
-			} while (dealer.getDealerHand().bustCheck() || (dealer.getDealerHand().getHandValue() == 21));
+			} while (dealer.getDealerHand().isBust() || (dealer.getDealerHand().getHandValue() == 21));
 			winnerCheck();
+			if (player.getPlayerHand().getHandValue() > dealer.getDealerHand().getHandValue()) {
+				System.out.println("Looks like you win this one partner");
+			}
+			if (player.getPlayerHand().getHandValue() < dealer.getDealerHand().getHandValue()) {
+				System.out.println("Looks like you just weren't good enough this time, no surprise");
+			}
 		}
 	}
 	
 	public void checkPlayerHand() {
-		if (player.getPlayerHand().bustCheck() || player.getPlayerHand().blackjackCheck()) {
+		if (player.getPlayerHand().isBust() || player.getPlayerHand().isBlackjack()) {
 			winnerCheck();
 		}
 	}
 	
 	public void checkDealerHand() {
-		if(dealer.getDealerHand().bustCheck() || dealer.getDealerHand().blackjackCheck()) {
+		if(dealer.getDealerHand().isBust() || dealer.getDealerHand().isBlackjack()) {
 			winnerCheck();
 		}
 	}
