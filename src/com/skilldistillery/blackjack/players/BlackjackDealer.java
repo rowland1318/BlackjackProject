@@ -37,16 +37,4 @@ public class BlackjackDealer extends BlackjackPlayer {
 		System.out.println("Dealer has been dealt the:\n" + hand.toString());
 	}
 	
-	public boolean dealerUnder17 () {
-		boolean checkFor17 = true;
-		if (hand.getHandValue() <17) {
-			checkFor17 = true;
-		} else {
-			checkFor17 = false;
-		}
-		return checkFor17;
-	}
-	
-	
-	
 }
